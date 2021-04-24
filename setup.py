@@ -25,6 +25,9 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 extras_require = {
+    'tests': [
+        'coverage==5.5'
+    ],
     'docs': [
         'sphinx~=3.3',
         'sphinx-rtd-theme',
@@ -38,7 +41,7 @@ extras_require = {
     ]
 }
 extras_require['dev'] = (
-    extras_require['docs'] + extras_require['checks']
+    extras_require['tests'] + extras_require['docs'] + extras_require['checks']
 )
 
 setup(

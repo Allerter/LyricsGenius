@@ -2,4 +2,15 @@ language: python
 
 install: pip install .[dev]
 
-script: tox
+script:
+  - tox -e coverage
+  - zip -r htmlcov
+
+deploy:
+  provider: releases
+  api_key: ${GITHUB_TOKEN}
+  file: htmlcov.zip
+  skip_cleanup: true
+  on:
+    tags: true
+  draft: true
