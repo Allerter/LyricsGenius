@@ -134,7 +134,7 @@ class Genius(API, PublicAPI):
         )
 
         # Determine the class of the div
-        divs = html.find_all("div", class_=re.compile("^lyrics$|Lyrics__Container"))
+        divs = html.find_all("div", class_=re.compile(r"^Lyrics-\w{2}.\w+.[1]|Lyrics__Container"))
         if divs is None or len(divs) <= 0:
             if self.verbose:
                 print("Couldn't find the lyrics section. "
@@ -208,10 +208,10 @@ class Genius(API, PublicAPI):
         sections = sorted(response['sections'],
                           key=lambda sect: sect['type'] == type_)
 
-        hits = [hit for hit in top_hits if hit['type'] == type_]
+        hits = [hit for hit in top_hits if hit['index'] == type_]
         hits.extend([hit for section in sections
                      for hit in section['hits']
-                     if hit['type'] == type_])
+                     if hit['index'] == type_])
 
         for hit in hits:
             item = hit['result']
